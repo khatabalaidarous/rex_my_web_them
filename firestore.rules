@@ -1,0 +1,320 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net (Default-Deny)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Core Primitives
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isAdmin() {
+      return isVerified() && (
+        request.auth.token.email.lower() in ['abduarahman.naif.ali@gmail.com', 'abdelrahmandevcode@gmail.com'] ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isLocalized(val, maxLen) {
+      return val is map &&
+        val.keys().hasAll(['ar', 'en']) &&
+        val.keys().hasOnly(['ar', 'en']) &&
+        val.ar is string && val.ar.size() >= 1 && val.ar.size() <= maxLen &&
+        val.en is string && val.en.size() >= 1 && val.en.size() <= maxLen;
+    }
+
+    // Entity Validation Blueprints
+    function isValidSiteSettings(data) {
+      return data.keys().hasAll(['name', 'legalName', 'tagline', 'shortTagline', 'email', 'whatsapp', 'location', 'socials', 'updatedAt']) &&
+        data.keys().hasOnly(['name', 'legalName', 'tagline', 'shortTagline', 'logoUrl', 'email', 'whatsapp', 'location', 'socials', 'aboutMission', 'aboutSecondary', 'stats', 'process', 'updatedAt']) &&
+        isLocalized(data.name, 120) &&
+        isLocalized(data.legalName, 160) &&
+        isLocalized(data.tagline, 240) &&
+        isLocalized(data.shortTagline, 80) &&
+        (!('logoUrl' in data) || (data.logoUrl is string && data.logoUrl.size() <= 120000)) &&
+        data.email is string && data.email.size() >= 5 && data.email.size() <= 160 &&
+        data.whatsapp is string && data.whatsapp.size() >= 6 && data.whatsapp.size() <= 32 &&
+        isLocalized(data.location, 160) &&
+        data.socials is list && data.socials.size() <= 10 &&
+        (data.socials.size() == 0 || (data.socials[0] is map && data.socials[0].keys().hasAll(['label', 'href']))) &&
+        (!('aboutMission' in data) || isLocalized(data.aboutMission, 1000)) &&
+        (!('aboutSecondary' in data) || isLocalized(data.aboutSecondary, 1000)) &&
+        (!('stats' in data) || (
+          data.stats is list &&
+          data.stats.size() <= 8 &&
+          (data.stats.size() == 0 || (
+            data.stats[0] is map &&
+            data.stats[0].keys().hasAll(['value', 'label']) &&
+            data.stats[0].value is string && data.stats[0].value.size() >= 1 && data.stats[0].value.size() <= 20 &&
+            isLocalized(data.stats[0].label, 120)
+          ))
+        )) &&
+        (!('process' in data) || (
+          data.process is list &&
+          data.process.size() <= 8 &&
+          (data.process.size() == 0 || (
+            data.process[0] is map &&
+            data.process[0].keys().hasAll(['number', 'title', 'description']) &&
+            data.process[0].number is string && data.process[0].number.size() >= 1 && data.process[0].number.size() <= 10 &&
+            isLocalized(data.process[0].title, 120) &&
+            isLocalized(data.process[0].description, 500)
+          ))
+        )) &&
+        data.updatedAt == request.time;
+    }
+
+    function isValidService(data) {
+      return data.keys().hasAll(['order', 'icon', 'title', 'description', 'updatedAt']) &&
+        data.keys().hasOnly(['order', 'icon', 'title', 'description', 'updatedAt']) &&
+        data.order is number && data.order >= 0 && data.order <= 999 &&
+        data.icon in ['code', 'palette', 'rocket', 'search', 'shield', 'sparkles'] &&
+        isLocalized(data.title, 120) &&
+        isLocalized(data.description, 500) &&
+        data.updatedAt == request.time;
+    }
+
+    function isValidProject(data) {
+      return data.keys().hasAll(['slug', 'title', 'summary', 'category', 'year', 'client', 'role', 'duration', 'challenge', 'solution', 'results', 'stack', 'placeholder', 'updatedAt']) &&
+        data.keys().hasOnly(['slug', 'title', 'summary', 'category', 'year', 'client', 'role', 'duration', 'challenge', 'solution', 'results', 'stack', 'placeholder', 'updatedAt']) &&
+        isValidId(data.slug) &&
+        isLocalized(data.title, 160) &&
+        isLocalized(data.summary, 400) &&
+        isLocalized(data.category, 80) &&
+        data.year is string && data.year.size() >= 4 && data.year.size() <= 10 &&
+        isLocalized(data.client, 160) &&
+        isLocalized(data.role, 160) &&
+        isLocalized(data.duration, 80) &&
+        isLocalized(data.challenge, 1500) &&
+        isLocalized(data.solution, 1500) &&
+        data.results is list && data.results.size() <= 10 &&
+        (data.results.size() == 0 || (data.results[0] is map && data.results[0].keys().hasAll(['value', 'label']))) &&
+        data.stack is list && data.stack.size() <= 20 &&
+        (data.stack.size() == 0 || data.stack[0] is string) &&
+        data.placeholder is bool &&
+        data.updatedAt == request.time;
+    }
+
+    function isValidPost(data) {
+      return data.keys().hasAll(['slug', 'title', 'excerpt', 'tag', 'date', 'readingMinutes', 'body', 'placeholder', 'updatedAt']) &&
+        data.keys().hasOnly(['slug', 'title', 'excerpt', 'tag', 'date', 'readingMinutes', 'body', 'placeholder', 'updatedAt']) &&
+        isValidId(data.slug) &&
+        isLocalized(data.title, 200) &&
+        isLocalized(data.excerpt, 500) &&
+        isLocalized(data.tag, 80) &&
+        data.date is string && data.date.size() >= 8 && data.date.size() <= 32 &&
+        data.readingMinutes is number && data.readingMinutes >= 1 && data.readingMinutes <= 120 &&
+        data.body is list && data.body.size() >= 1 && data.body.size() <= 50 &&
+        isLocalized(data.body[0], 4000) &&
+        data.placeholder is bool &&
+        data.updatedAt == request.time;
+    }
+
+    function isValidMember(data) {
+      return data.keys().hasAll(['slug', 'order', 'initials', 'role', 'focus', 'responsibilities', 'stack', 'placeholder', 'updatedAt']) &&
+        data.keys().hasOnly(['slug', 'order', 'initials', 'name', 'avatar', 'role', 'focus', 'responsibilities', 'stack', 'placeholder', 'updatedAt']) &&
+        isValidId(data.slug) &&
+        data.order is number && data.order >= 0 && data.order <= 999 &&
+        data.initials is string && data.initials.size() >= 1 && data.initials.size() <= 6 &&
+        (!('name' in data) || isLocalized(data.name, 120)) &&
+        (!('avatar' in data) || (data.avatar is string && data.avatar.size() <= 120000)) &&
+        isLocalized(data.role, 120) &&
+        isLocalized(data.focus, 300) &&
+        data.responsibilities is list && data.responsibilities.size() <= 15 &&
+        (data.responsibilities.size() == 0 || isLocalized(data.responsibilities[0], 400)) &&
+        data.stack is list && data.stack.size() <= 20 &&
+        (data.stack.size() == 0 || data.stack[0] is string) &&
+        data.placeholder is bool &&
+        data.updatedAt == request.time;
+    }
+
+    function isValidTestimonial(data) {
+      return data.keys().hasAll(['order', 'quote', 'role', 'initials', 'placeholder', 'updatedAt']) &&
+        data.keys().hasOnly(['order', 'quote', 'role', 'initials', 'placeholder', 'updatedAt']) &&
+        data.order is number && data.order >= 0 && data.order <= 999 &&
+        isLocalized(data.quote, 800) &&
+        isLocalized(data.role, 160) &&
+        data.initials is string && data.initials.size() >= 1 && data.initials.size() <= 6 &&
+        data.placeholder is bool &&
+        data.updatedAt == request.time;
+    }
+
+    function isValidSector(data) {
+      return data.keys().hasAll(['order', 'icon', 'label', 'updatedAt']) &&
+        data.keys().hasOnly(['order', 'icon', 'label', 'updatedAt']) &&
+        data.order is number && data.order >= 0 && data.order <= 999 &&
+        data.icon in ['cart', 'cpu', 'book', 'heart', 'bank', 'truck', 'building', 'plane'] &&
+        isLocalized(data.label, 120) &&
+        data.updatedAt == request.time;
+    }
+
+    function isValidTech(data) {
+      return data.keys().hasAll(['name', 'group', 'category', 'description', 'accent', 'updatedAt']) &&
+        data.keys().hasOnly(['name', 'group', 'category', 'description', 'accent', 'updatedAt']) &&
+        data.name is string && data.name.size() >= 1 && data.name.size() <= 80 &&
+        data.group in ['web', 'backend', 'mobile', 'database', 'tools'] &&
+        isLocalized(data.category, 80) &&
+        isLocalized(data.description, 300) &&
+        data.accent in ['violet', 'mint', 'sky', 'amber'] &&
+        data.updatedAt == request.time;
+    }
+
+    function isValidFaq(data) {
+      return data.keys().hasAll(['order', 'q', 'a', 'updatedAt']) &&
+        data.keys().hasOnly(['order', 'q', 'a', 'updatedAt']) &&
+        data.order is number && data.order >= 0 && data.order <= 999 &&
+        isLocalized(data.q, 300) &&
+        isLocalized(data.a, 1500) &&
+        data.updatedAt == request.time;
+    }
+
+    function isValidLegal(data) {
+      return data.keys().hasAll(['key', 'updated', 'notice', 'intro', 'sections', 'updatedAt']) &&
+        data.keys().hasOnly(['key', 'updated', 'notice', 'intro', 'sections', 'updatedAt']) &&
+        data.key in ['privacy', 'terms'] &&
+        data.updated is string && data.updated.size() >= 4 && data.updated.size() <= 32 &&
+        isLocalized(data.notice, 500) &&
+        isLocalized(data.intro, 1000) &&
+        data.sections is list && data.sections.size() <= 20 &&
+        (data.sections.size() == 0 || (data.sections[0] is map && data.sections[0].keys().hasAll(['heading', 'body']))) &&
+        data.updatedAt == request.time;
+    }
+
+    function isValidContactSubmission(data) {
+      return data.keys().hasAll(['name', 'email', 'company', 'message', 'status', 'notes', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly(['name', 'email', 'company', 'message', 'status', 'notes', 'createdAt', 'updatedAt']) &&
+        data.name is string && data.name.size() >= 2 && data.name.size() <= 80 &&
+        data.email is string && data.email.size() >= 5 && data.email.size() <= 160 &&
+        data.company is string && data.company.size() <= 120 &&
+        data.message is string && data.message.size() >= 20 && data.message.size() <= 2000 &&
+        data.status in ['new', 'in_review', 'replied', 'archived'] &&
+        data.notes is string && data.notes.size() <= 1000 &&
+        data.createdAt is timestamp &&
+        data.updatedAt == request.time;
+    }
+
+    // Public CMS Collections (Public Read, Admin Write)
+    match /siteSettings/{settingId} {
+      allow get: if isValidId(settingId);
+      allow list: if true;
+      allow create, update: if isValidId(settingId) && isAdmin() && isValidSiteSettings(incoming());
+      allow delete: if isValidId(settingId) && isAdmin();
+    }
+
+    match /services/{serviceId} {
+      allow get: if isValidId(serviceId);
+      allow list: if true;
+      allow create, update: if isValidId(serviceId) && isAdmin() && isValidService(incoming());
+      allow delete: if isValidId(serviceId) && isAdmin();
+    }
+
+    match /projects/{projectId} {
+      allow get: if isValidId(projectId);
+      allow list: if true;
+      allow create, update: if isValidId(projectId) && isAdmin() && isValidProject(incoming());
+      allow delete: if isValidId(projectId) && isAdmin();
+    }
+
+    match /posts/{postId} {
+      allow get: if isValidId(postId);
+      allow list: if true;
+      allow create, update: if isValidId(postId) && isAdmin() && isValidPost(incoming());
+      allow delete: if isValidId(postId) && isAdmin();
+    }
+
+    match /team/{memberId} {
+      allow get: if isValidId(memberId);
+      allow list: if true;
+      allow create, update: if isValidId(memberId) && isAdmin() && isValidMember(incoming());
+      allow delete: if isValidId(memberId) && isAdmin();
+    }
+
+    match /testimonials/{testimonialId} {
+      allow get: if isValidId(testimonialId);
+      allow list: if true;
+      allow create, update: if isValidId(testimonialId) && isAdmin() && isValidTestimonial(incoming());
+      allow delete: if isValidId(testimonialId) && isAdmin();
+    }
+
+    match /sectors/{sectorId} {
+      allow get: if isValidId(sectorId);
+      allow list: if true;
+      allow create, update: if isValidId(sectorId) && isAdmin() && isValidSector(incoming());
+      allow delete: if isValidId(sectorId) && isAdmin();
+    }
+
+    match /techStack/{techId} {
+      allow get: if isValidId(techId);
+      allow list: if true;
+      allow create, update: if isValidId(techId) && isAdmin() && isValidTech(incoming());
+      allow delete: if isValidId(techId) && isAdmin();
+    }
+
+    match /faqs/{faqId} {
+      allow get: if isValidId(faqId);
+      allow list: if true;
+      allow create, update: if isValidId(faqId) && isAdmin() && isValidFaq(incoming());
+      allow delete: if isValidId(faqId) && isAdmin();
+    }
+
+    match /legal/{legalId} {
+      allow get: if isValidId(legalId);
+      allow list: if true;
+      allow create, update: if isValidId(legalId) && isAdmin() && isValidLegal(incoming());
+      allow delete: if isValidId(legalId) && isAdmin();
+    }
+
+    // Contact Submissions (Public Create with Strict Blueprint, Admin-Only Read/Update/Delete)
+    match /contactSubmissions/{submissionId} {
+      allow get: if isValidId(submissionId) && isAdmin();
+      allow list: if isAdmin();
+      allow create: if isValidId(submissionId) &&
+        isValidContactSubmission(incoming()) &&
+        incoming().status == 'new' &&
+        incoming().notes == '' &&
+        incoming().createdAt == request.time;
+      allow update: if isValidId(submissionId) &&
+        isAdmin() &&
+        isValidContactSubmission(incoming()) &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().diff(existing()).affectedKeys().hasOnly(['status', 'notes', 'updatedAt']);
+      allow delete: if isValidId(submissionId) && isAdmin();
+    }
+
+    function isValidAdminUser(data) {
+      return data.keys().hasAll(['email', 'role', 'createdAt']) &&
+        data.keys().hasOnly(['email', 'role', 'createdAt']) &&
+        data.email is string && data.email.size() >= 5 && data.email.size() <= 160 &&
+        data.role == 'admin' &&
+        data.createdAt is timestamp;
+    }
+
+    // Admins Collection (Admin-Only Access, Prevents Self-Assigned Roles)
+    match /admins/{adminUid} {
+      allow get: if isValidId(adminUid) && (isAdmin() || (isVerified() && request.auth.uid == adminUid));
+      allow list: if isAdmin();
+      allow create: if isValidId(adminUid) && isAdmin() && isValidAdminUser(incoming()) && incoming().createdAt == request.time;
+      allow update: if isValidId(adminUid) && isAdmin() && isValidAdminUser(incoming()) && incoming().createdAt == existing().createdAt;
+      allow delete: if isValidId(adminUid) && isAdmin();
+    }
+  }
+}

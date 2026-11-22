@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="ns-ring" x1="6" y1="6" x2="58" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7C5CFF" />
+      <stop offset="55%" stop-color="#4FE3C1" stop-opacity="0.7" />
+      <stop offset="100%" stop-color="#7C5CFF" />
+    </linearGradient>
+    <radialGradient id="ns-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(18 16) rotate(45) scale(52)">
+      <stop offset="0%" stop-color="#7C5CFF" stop-opacity="0.28" />
+      <stop offset="100%" stop-color="#07070B" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#07070B" />
+  <rect width="64" height="64" rx="16" fill="url(#ns-glow)" />
+  <rect x="2" y="2" width="60" height="60" rx="14" stroke="url(#ns-ring)" stroke-width="2" />
+  <path d="M16 44V20L30 44V20" stroke="#F4F4F6" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M47 23.5C47 21 44.6 19.5 41.2 19.5C37.8 19.5 35.5 21.2 35.5 23.8C35.5 26.6 38 27.9 41.5 28.9C45 29.9 47.5 31.3 47.5 34.8C47.5 38.2 44.8 40.5 41 40.5C37.4 40.5 35 38.8 34.6 36" stroke="#4FE3C1" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M16 50H48" stroke="#7C5CFF" stroke-opacity="0.55" stroke-width="2" stroke-linecap="round" />
+</svg>

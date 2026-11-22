@@ -1,0 +1,269 @@
+{
+  "meta": {
+    "title": "Next Soft | High-Performance Web & Digital Product Engineering",
+    "description": "Next Soft engineers fast, accessible Arabic RTL and English web applications, custom platforms, and scalable digital products built for growth."
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "work": "Work",
+    "about": "About",
+    "team": "Team",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "Available for new projects",
+    "title": "We build digital products",
+    "titleAccent": "worth trusting",
+    "subtitle": "We turn ambitious ideas into fast, clear, carefully crafted web experiences — from the first sketch to launch and beyond.",
+    "ctaPrimary": "Start a project",
+    "ctaSecondary": "See our work",
+    "scroll": "Scroll to explore"
+  },
+  "services": {
+    "eyebrow": "Services",
+    "title": "What we do",
+    "subtitle": "End-to-end solutions across the whole product journey."
+  },
+  "work": {
+    "eyebrow": "Selected work",
+    "title": "Projects we are proud of",
+    "subtitle": "Placeholder samples, editable and replaceable directly from the built-in Studio.",
+    "viewCase": "View case",
+    "all": "All",
+    "filter": "Filter by category",
+    "placeholderBadge": "Placeholder",
+    "client": "Client",
+    "role": "Our role",
+    "duration": "Duration",
+    "year": "Year",
+    "challenge": "Challenge",
+    "solution": "Solution",
+    "results": "Results",
+    "stack": "Stack",
+    "overview": "Overview",
+    "nextProject": "Next project",
+    "backToWork": "All work"
+  },
+  "process": {
+    "eyebrow": "Process",
+    "title": "How we work",
+    "subtitle": "A clear process, full transparency, no surprises."
+  },
+  "stats": {
+    "projects": "Projects delivered",
+    "clients": "Happy clients",
+    "experience": "Years of experience",
+    "retention": "Client retention"
+  },
+  "cta": {
+    "title": "Have an idea? Let's talk.",
+    "subtitle": "Tell us about your project and we'll get back with a clear plan within 24 hours.",
+    "primary": "Contact us",
+    "secondary": "Chat on WhatsApp"
+  },
+  "tech": {
+    "eyebrow": "Tech stack",
+    "title": "What we build with",
+    "subtitle": "A modern, stable stack chosen deliberately for each project."
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Questions clients ask",
+    "subtitle": "Quick answers before we start talking."
+  },
+  "sectors": {
+    "eyebrow": "Sectors",
+    "title": "Sectors we serve",
+    "subtitle": "Practical experience across industries, not borrowed logos."
+  },
+  "testimonials": {
+    "eyebrow": "Client feedback",
+    "title": "What clients say",
+    "subtitle": "Three illustrative quotes, replaced with real feedback before launch.",
+    "notice": "These are illustrative quotes, not real testimonials.",
+    "prev": "Previous",
+    "next": "Next",
+    "placeholder": "Placeholder"
+  },
+  "team": {
+    "eyebrow": "Team",
+    "title": "Who builds your product",
+    "subtitle": "Clear roles and shared accountability, not vague promises.",
+    "notice": "These are illustrative team profiles — edit names, titles, and responsibilities or replace them with your real team from the built-in Studio.",
+    "focus": "Focus",
+    "stack": "Tools",
+    "contactCta": "Talk to the team",
+    "placeholder": "Sample profile",
+    "homeTitle": "The team behind your product",
+    "homeSubtitle": "Integrated engineering disciplines sharing full accountability for your product.",
+    "homeCta": "Meet the team"
+  },
+  "blog": {
+    "eyebrow": "Blog",
+    "title": "Notes from the build",
+    "subtitle": "What we learn about performance, Arabic design and engineering while we work.",
+    "readMore": "Read the post",
+    "minRead": "min read",
+    "published": "Published",
+    "back": "All posts",
+    "placeholder": "Placeholder post",
+    "homeTitle": "Latest posts",
+    "homeSubtitle": "Practical notes from real projects, not recycled ideas.",
+    "homeCta": "All posts"
+  },
+  "form": {
+    "title": "Tell us about your project",
+    "subtitle": "Fill in the form and we'll come back within one business day with a first plan.",
+    "name": "Name",
+    "namePlaceholder": "Your full name",
+    "email": "Email",
+    "emailPlaceholder": "you@company.com",
+    "company": "Company",
+    "companyPlaceholder": "Company or project name",
+    "message": "Project details",
+    "messagePlaceholder": "What would you like to build, and what is your target timeline?",
+    "quickStarters": "Quick brief starters",
+    "copyEmail": "Copy email",
+    "copiedEmail": "Copied",
+    "optional": "optional",
+    "submit": "Send message",
+    "submitting": "Sending…",
+    "success": "Message received and saved",
+    "successBody": "Your inquiry has been stored in our database. We'll review the details and get back with a first plan within one business day.",
+    "referenceId": "Reference ID",
+    "reset": "Send another message",
+    "error": "The message could not be sent. Check the fields and try again.",
+    "required": "This field is required",
+    "invalidEmail": "Enter a valid email address",
+    "tooShort": "Write at least 20 characters",
+    "tooLong": "This text is too long"
+  },
+  "search": {
+    "label": "Quick search",
+    "placeholder": "Search for a page or service…",
+    "empty": "No matching results",
+    "hint": "Press Enter to jump",
+    "query": "Search term",
+    "submit": "Search",
+    "results": "Results",
+    "noQuery": "Type a term to search pages, services, projects and posts.",
+    "pages": "Pages",
+    "services": "Services",
+    "projects": "Projects",
+    "posts": "Posts",
+    "team": "Team",
+    "skills": "Skills"
+  },
+  "pages": {
+    "about": {
+      "eyebrow": "About",
+      "title": "A team that sweats the details",
+      "subtitle": "We build digital products that pair technical precision with design taste, and we work as a partner, not a vendor.",
+      "missionTitle": "Our mission",
+      "valuesTitle": "What we believe",
+      "valuesSubtitle": "Four principles guide every decision, from the first call to long after launch."
+    },
+    "services": {
+      "eyebrow": "Services",
+      "title": "From idea to launch",
+      "subtitle": "End-to-end design, build and operations with one team and one accountable partner."
+    },
+    "work": {
+      "eyebrow": "Work",
+      "title": "Selected projects",
+      "subtitle": "Placeholder samples, replaced by real projects from the built-in Studio before launch."
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Let's talk",
+      "subtitle": "Tell us about your project and we'll get back with a clear plan within 24 hours.",
+      "emailTitle": "Email",
+      "emailBody": "Send us the details and we'll reply within one business day.",
+      "whatsappTitle": "WhatsApp",
+      "whatsappBody": "A quick, direct chat for your first questions.",
+      "locationTitle": "Location",
+      "locationBody": "Yemen — working remotely with clients everywhere."
+    }
+  },
+  "legal": {
+    "privacy": "Privacy policy",
+    "privacySubtitle": "What data we collect, how we use it and how we protect it.",
+    "terms": "Terms and conditions",
+    "termsSubtitle": "How you may use this site and what to expect.",
+    "updated": "Last updated"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "back": "Back home"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "nav": "Quick links",
+    "contact": "Contact",
+    "social": "Follow us",
+    "madeWith": "Crafted with care"
+  },
+  "common": {
+    "language": "Language",
+    "theme": "Appearance",
+    "light": "Light",
+    "dark": "Dark",
+    "menu": "Menu",
+    "close": "Close",
+    "skipToContent": "Skip to content",
+    "breadcrumb": "Breadcrumb"
+  },
+  "studio": {
+    "title": "Content Studio",
+    "subtitle": "Manage bilingual site content and client contact submissions from the built-in database.",
+    "signInTitle": "Sign in to Studio",
+    "signInDesc": "Sign in with an authorized administrator account to manage site content, case studies, posts, and contact inquiries.",
+    "signInGoogle": "Sign in with Google",
+    "signOut": "Sign out",
+    "accessDenied": "Access Denied",
+    "accessDeniedDesc": "This account is not authorized to manage the studio. Please sign in with the authorized administrator account.",
+    "loading": "Checking session…",
+    "seedButton": "Sync Default Content to Firestore",
+    "seeding": "Syncing…",
+    "seedSuccess": "Default records synced to Firestore",
+    "refreshCache": "Refresh site cache",
+    "saved": "Saved and site cache refreshed",
+    "deleted": "Deleted successfully",
+    "error": "An error occurred while saving",
+    "tabs": {
+      "overview": "Overview",
+      "inbox": "Contact Inbox",
+      "settings": "Site Settings",
+      "services": "Services",
+      "projects": "Projects",
+      "posts": "Blog Posts",
+      "team": "Team Roles",
+      "tech": "Tech Stack",
+      "extras": "Sectors, Quotes & FAQs",
+      "legal": "Legal Pages"
+    },
+    "inbox": {
+      "empty": "No contact submissions yet.",
+      "all": "All",
+      "new": "New",
+      "in_review": "In review",
+      "replied": "Replied",
+      "archived": "Archived",
+      "notes": "Internal notes",
+      "saveChanges": "Save update",
+      "replyEmail": "Reply via email",
+      "delete": "Delete message"
+    },
+    "actions": {
+      "add": "Add new item",
+      "save": "Save changes",
+      "saving": "Saving…",
+      "delete": "Delete",
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "backToSite": "Back to site"
+    }
+  }
+}

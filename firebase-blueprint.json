@@ -1,0 +1,240 @@
+{
+  "entities": {
+    "SiteSettings": {
+      "title": "SiteSettings",
+      "description": "Global site metadata, contact endpoints, and localized brand identity.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "object", "description": "Localized brand name {ar, en}" },
+        "legalName": { "type": "object", "description": "Localized legal name {ar, en}" },
+        "tagline": { "type": "object", "description": "Localized tagline {ar, en}" },
+        "shortTagline": { "type": "object", "description": "Short localized tagline {ar, en}" },
+        "logoUrl": { "type": "string", "maxLength": 120000, "description": "Optional custom brand logo path, HTTPS URL, or compact optimized data URL" },
+        "email": { "type": "string", "format": "email", "maxLength": 160 },
+        "whatsapp": { "type": "string", "maxLength": 32, "pattern": "^[0-9]{6,20}$" },
+        "location": { "type": "object", "description": "Localized office location {ar, en}" },
+        "socials": { "type": "array", "description": "Social links up to 10 items" },
+        "aboutMission": { "type": "object", "description": "Localized about mission {ar, en}" },
+        "aboutSecondary": { "type": "object", "description": "Localized about secondary copy {ar, en}" },
+        "stats": { "type": "array", "description": "Optional home/about stats metrics up to 8 items" },
+        "process": { "type": "array", "description": "Optional process steps up to 8 items" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "legalName", "tagline", "shortTagline", "email", "whatsapp", "location", "socials", "updatedAt"]
+    },
+    "Service": {
+      "title": "Service",
+      "description": "Bilingual service offering displayed on home and services pages.",
+      "type": "object",
+      "properties": {
+        "order": { "type": "number" },
+        "icon": { "type": "string", "enum": ["code", "palette", "rocket", "search", "shield", "sparkles"] },
+        "title": { "type": "object" },
+        "description": { "type": "object" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["order", "icon", "title", "description", "updatedAt"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "Portfolio case study with bilingual details and metrics.",
+      "type": "object",
+      "properties": {
+        "slug": { "type": "string", "minLength": 2, "maxLength": 100, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "title": { "type": "object" },
+        "summary": { "type": "object" },
+        "category": { "type": "object" },
+        "year": { "type": "string", "minLength": 4, "maxLength": 10 },
+        "client": { "type": "object" },
+        "role": { "type": "object" },
+        "duration": { "type": "object" },
+        "challenge": { "type": "object" },
+        "solution": { "type": "object" },
+        "results": { "type": "array" },
+        "stack": { "type": "array" },
+        "placeholder": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["slug", "title", "summary", "category", "year", "client", "role", "duration", "challenge", "solution", "results", "stack", "placeholder", "updatedAt"]
+    },
+    "Post": {
+      "title": "Post",
+      "description": "Bilingual engineering/design blog article.",
+      "type": "object",
+      "properties": {
+        "slug": { "type": "string", "minLength": 2, "maxLength": 100, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "title": { "type": "object" },
+        "excerpt": { "type": "object" },
+        "tag": { "type": "object" },
+        "date": { "type": "string", "minLength": 8, "maxLength": 32 },
+        "readingMinutes": { "type": "number" },
+        "body": { "type": "array" },
+        "placeholder": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["slug", "title", "excerpt", "tag", "date", "readingMinutes", "body", "placeholder", "updatedAt"]
+    },
+    "Member": {
+      "title": "Member",
+      "description": "Team role or member profile.",
+      "type": "object",
+      "properties": {
+        "slug": { "type": "string", "minLength": 2, "maxLength": 100, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "order": { "type": "number" },
+        "initials": { "type": "string", "minLength": 1, "maxLength": 6 },
+        "name": { "type": "object", "description": "Localized member display name {ar, en}" },
+        "avatar": { "type": "string", "maxLength": 120000, "description": "Optional portrait image path, HTTPS URL, or optimized data URL" },
+        "role": { "type": "object" },
+        "focus": { "type": "object" },
+        "responsibilities": { "type": "array" },
+        "stack": { "type": "array" },
+        "placeholder": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["slug", "order", "initials", "role", "focus", "responsibilities", "stack", "placeholder", "updatedAt"]
+    },
+    "Testimonial": {
+      "title": "Testimonial",
+      "description": "Client testimonial quote.",
+      "type": "object",
+      "properties": {
+        "order": { "type": "number" },
+        "quote": { "type": "object" },
+        "role": { "type": "object" },
+        "initials": { "type": "string", "minLength": 1, "maxLength": 6 },
+        "placeholder": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["order", "quote", "role", "initials", "placeholder", "updatedAt"]
+    },
+    "Sector": {
+      "title": "Sector",
+      "description": "Industry sector served by the team.",
+      "type": "object",
+      "properties": {
+        "order": { "type": "number" },
+        "icon": { "type": "string", "enum": ["cart", "cpu", "book", "heart", "bank", "truck", "building", "plane"] },
+        "label": { "type": "object" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["order", "icon", "label", "updatedAt"]
+    },
+    "Tech": {
+      "title": "Tech",
+      "description": "Technology stack capability item.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "group": { "type": "string", "enum": ["web", "backend", "mobile", "database", "tools"] },
+        "category": { "type": "object" },
+        "description": { "type": "object" },
+        "accent": { "type": "string", "enum": ["violet", "mint", "sky", "amber"] },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "group", "category", "description", "accent", "updatedAt"]
+    },
+    "Faq": {
+      "title": "Faq",
+      "description": "Frequently asked question and bilingual answer.",
+      "type": "object",
+      "properties": {
+        "order": { "type": "number" },
+        "q": { "type": "object" },
+        "a": { "type": "object" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["order", "q", "a", "updatedAt"]
+    },
+    "Legal": {
+      "title": "Legal",
+      "description": "Privacy policy or terms of service document.",
+      "type": "object",
+      "properties": {
+        "key": { "type": "string", "enum": ["privacy", "terms"] },
+        "updated": { "type": "string", "minLength": 4, "maxLength": 32 },
+        "notice": { "type": "object" },
+        "intro": { "type": "object" },
+        "sections": { "type": "array" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["key", "updated", "notice", "intro", "sections", "updatedAt"]
+    },
+    "ContactSubmission": {
+      "title": "ContactSubmission",
+      "description": "Lead inquiry submitted via the public contact form.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "email": { "type": "string", "format": "email", "minLength": 5, "maxLength": 160 },
+        "company": { "type": "string", "maxLength": 120 },
+        "message": { "type": "string", "minLength": 20, "maxLength": 2000 },
+        "status": { "type": "string", "enum": ["new", "in_review", "replied", "archived"] },
+        "notes": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "company", "message", "status", "notes", "createdAt", "updatedAt"]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Authorized studio administrator record.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email", "maxLength": 160 },
+        "role": { "type": "string", "enum": ["admin"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "role", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/siteSettings/{settingId}": {
+      "schema": { "$ref": "#/entities/SiteSettings" },
+      "description": "Singleton site settings document (id: main)"
+    },
+    "/services/{serviceId}": {
+      "schema": { "$ref": "#/entities/Service" },
+      "description": "Ordered service cards"
+    },
+    "/projects/{projectId}": {
+      "schema": { "$ref": "#/entities/Project" },
+      "description": "Portfolio case studies keyed by slug"
+    },
+    "/posts/{postId}": {
+      "schema": { "$ref": "#/entities/Post" },
+      "description": "Blog posts keyed by slug"
+    },
+    "/team/{memberId}": {
+      "schema": { "$ref": "#/entities/Member" },
+      "description": "Team role profiles keyed by slug"
+    },
+    "/testimonials/{testimonialId}": {
+      "schema": { "$ref": "#/entities/Testimonial" },
+      "description": "Client feedback entries"
+    },
+    "/sectors/{sectorId}": {
+      "schema": { "$ref": "#/entities/Sector" },
+      "description": "Industry sectors served"
+    },
+    "/techStack/{techId}": {
+      "schema": { "$ref": "#/entities/Tech" },
+      "description": "Technology capabilities"
+    },
+    "/faqs/{faqId}": {
+      "schema": { "$ref": "#/entities/Faq" },
+      "description": "Frequently asked questions"
+    },
+    "/legal/{legalId}": {
+      "schema": { "$ref": "#/entities/Legal" },
+      "description": "Legal pages (privacy, terms)"
+    },
+    "/contactSubmissions/{submissionId}": {
+      "schema": { "$ref": "#/entities/ContactSubmission" },
+      "description": "Private contact inquiries readable only by verified admins"
+    },
+    "/admins/{adminUid}": {
+      "schema": { "$ref": "#/entities/AdminUser" },
+      "description": "Authorized admin UIDs"
+    }
+  }
+}
